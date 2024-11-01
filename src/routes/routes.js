@@ -10,7 +10,6 @@ router.get("/", paginationMW(pokemonData), (req, res) => {
 
 router.get("/search", (req, res) => {
   const query = req.query.q.toLowerCase();
-  console.log(">>>query", query);
   const nameResult = pokemonData.filter((pokemon) =>
     pokemon.Name.toLowerCase().includes(query)
   );
@@ -27,21 +26,22 @@ router.get("/type", (req, res) => {
 
 router.get("/:pokemonId", (req, res) => {
   const pokemonId = Number(req.params.pokemonId);
-  console.log(pokemonId, "pokemonID");
   const pokemonIndex = pokemonData.findIndex(
     (pokemon) => pokemon.id === pokemonId
   );
   if (pokemonIndex !== -1) {
-    const result = [
-      pokemonData[
-        pokemonIndex + 1 >= pokemonData.length ? 0 : pokemonIndex + 1
-      ],
-      pokemonData[pokemonIndex],
-      pokemonData[
-        pokemonIndex - 1 < 0 ? pokemonData.length - 1 : pokemonIndex - 1
-      ],
-    ].filter(Boolean);
-    res.send(result);
+    const pokemon = {
+      previousPokemon:
+        pokemonData[
+          pokemonIndex - 1 < 0 ? pokemonData.length - 1 : pokemonIndex - 1
+        ],
+      pokemon: pokemonData[pokemonIndex],
+      nextPokemon:
+        pokemonData[
+          pokemonIndex + 1 >= pokemonData.length ? 0 : pokemonIndex + 1
+        ],
+    };
+    res.json(pokemon);
   } else {
     res.status(404).send("No pokemon found");
   }

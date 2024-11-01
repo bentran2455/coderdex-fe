@@ -32,7 +32,7 @@ export const getPokemonById = createAsyncThunk(
       let url = `/pokemons/${id}`;
       const response = await apiService.get(url);
       if (!response.data) return rejectWithValue({ message: "No data" });
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(error);
     }
