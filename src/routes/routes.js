@@ -2,17 +2,10 @@ const { Router } = require("express");
 const express = require("express");
 const router = express.Router();
 const pokemonData = require("../data/pokemonData");
+const paginationMW = require("../middleware/pagination");
 
-router.get("/", (req, res) => {
-  const page = req.query.page;
-  const limit = req.query.limit;
-
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-
-  const result = pokemonData.slice(startIndex, endIndex);
-
-  res.status(200).json(result);
+router.get("/", paginationMW(pokemonData), (req, res) => {
+  res.status(200).json(res.paginationMW);
 });
 
 router.get("/search", (req, res) => {
