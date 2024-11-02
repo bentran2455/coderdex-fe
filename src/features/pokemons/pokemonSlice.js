@@ -108,92 +108,91 @@ export const pokemonSlice = createSlice({
       state.search = action.payload;
     },
   },
-  extraReducers: {
-    [getPokemons.pending]: (state, action) => {
-      state.loading = true;
-      state.errorMessage = "";
-    },
-    [getPokemonById.pending]: (state) => {
-      state.loading = true;
-      state.errorMessage = "";
-    },
-
-    [addPokemon.pending]: (state) => {
-      state.loading = true;
-      state.errorMessage = "";
-    },
-    [deletePokemon.pending]: (state) => {
-      state.loading = true;
-      state.errorMessage = "";
-    },
-    [editPokemon.pending]: (state) => {
-      state.loading = true;
-      state.errorMessage = "";
-    },
-    [getPokemons.fulfilled]: (state, action) => {
-      state.loading = false;
-      const { search, type } = state;
-      if ((search || type) && state.page === 1) {
-        console.log(action.payload, "error?");
-        state.pokemons = action.payload;
-      } else {
-        state.pokemons = [...state.pokemons, ...action.payload];
-      }
-    },
-    [getPokemonById.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.pokemon = action.payload;
-    },
-    [addPokemon.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [deletePokemon.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [editPokemon.fulfilled]: (state) => {
-      state.loading = true;
-    },
-    [getPokemons.rejected]: (state, action) => {
-      state.loading = false;
-      if (action.payload) {
-        state.errorMessage = action.payload.message;
-      } else {
-        state.errorMessage = action.error.message;
-      }
-    },
-    [getPokemonById.rejected]: (state, action) => {
-      state.loading = false;
-      if (action.payload) {
-        state.errorMessage = action.payload.message;
-      } else {
-        state.errorMessage = action.error.message;
-      }
-    },
-
-    [addPokemon.rejected]: (state, action) => {
-      state.loading = false;
-      if (action.payload) {
-        state.errorMessage = action.payload.message;
-      } else {
-        state.errorMessage = action.error.message;
-      }
-    },
-    [deletePokemon.rejected]: (state, action) => {
-      state.loading = false;
-      if (action.payload) {
-        state.errorMessage = action.payload.message;
-      } else {
-        state.errorMessage = action.error.message;
-      }
-    },
-    [editPokemon.rejected]: (state, action) => {
-      state.loading = false;
-      if (action.payload) {
-        state.errorMessage = action.payload.message;
-      } else {
-        state.errorMessage = action.error.message;
-      }
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPokemons.pending, (state) => {
+        state.loading = true;
+        state.errorMessage = "";
+      })
+      .addCase(getPokemonById.pending, (state) => {
+        state.loading = true;
+        state.errorMessage = "";
+      })
+      .addCase(addPokemon.pending, (state) => {
+        state.loading = true;
+        state.errorMessage = "";
+      })
+      .addCase(deletePokemon.pending, (state) => {
+        state.loading = true;
+        state.errorMessage = "";
+      })
+      .addCase(editPokemon.pending, (state) => {
+        state.loading = true;
+        state.errorMessage = "";
+      })
+      .addCase(getPokemons.fulfilled, (state, action) => {
+        state.loading = false;
+        const { search, type } = state;
+        if ((search || type) && state.page === 1) {
+          console.log(action.payload, "error?");
+          state.pokemons = action.payload;
+        } else {
+          state.pokemons = [...state.pokemons, ...action.payload];
+        }
+      })
+      .addCase(getPokemonById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.pokemon = action.payload;
+      })
+      .addCase(addPokemon.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(deletePokemon.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(editPokemon.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(getPokemons.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.errorMessage = action.payload.message;
+        } else {
+          state.errorMessage = action.error.message;
+        }
+      })
+      .addCase(getPokemonById.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.errorMessage = action.payload.message;
+        } else {
+          state.errorMessage = action.error.message;
+        }
+      })
+      .addCase(addPokemon.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.errorMessage = action.payload.message;
+        } else {
+          state.errorMessage = action.error.message;
+        }
+      })
+      .addCase(deletePokemon.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.errorMessage = action.payload.message;
+        } else {
+          state.errorMessage = action.error.message;
+        }
+      })
+      .addCase(editPokemon.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.errorMessage = action.payload.message;
+        } else {
+          state.errorMessage = action.error.message;
+        }
+      });
   },
 });
 

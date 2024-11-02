@@ -134,7 +134,7 @@ export default function PokeList() {
         <Grid
           maxWidth="md"
           className="filter-types"
-          container={true}
+          container="true"
           spacing={2}
           sx={{ pb: 5 }}
         >
@@ -198,7 +198,7 @@ export default function PokeList() {
             }
           >
             <Grid
-              container={true}
+              container="true"
               maxWidth="md"
               sx={styles.pokeContainer}
               spacing={{ xs: 0, md: 3 }}
