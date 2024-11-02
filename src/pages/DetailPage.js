@@ -227,7 +227,7 @@ export const DetailPage = () => {
   );
 };
 
-const weaknesses = {
+const typeWeaknesses = {
   normal: {
     nullified: ["ghost"],
     resistant: [],
@@ -354,11 +354,13 @@ const calculateWeaknesses = (types) => {
     fairy: 0,
   };
 
-  // types.forEach((type) => {
-  //   weaknesses[type].weak.forEach((t) => total[t]++);
-  //   weaknesses[type].resistant.forEach((t) => total[t]--);
-  //   weaknesses[type].nullified.forEach((t) => total[t]--);
-  // });
+  types.forEach((type) => {
+    if (typeWeaknesses[type]) {
+      typeWeaknesses[type].weak.forEach((t) => total[t]++);
+      typeWeaknesses[type].resistant.forEach((t) => total[t]--);
+      typeWeaknesses[type].nullified.forEach((t) => total[t]--);
+    }
+  });
   let final = [];
   Object.keys(total).forEach((type) => {
     if (total[type] > 0) final.push(type);
