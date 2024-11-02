@@ -26,7 +26,7 @@ export const DetailPage = () => {
   const { pokemon, nextPokemon, previousPokemon } = useSelector(
     (state) => state.pokemons.pokemon
   );
-  console.log(">>>detail page", pokemon);
+  console.log(">>> pokemon detail", pokemon);
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -74,9 +74,9 @@ export const DetailPage = () => {
                 fontSize={24}
                 fontWeight={700}
               >
-                {previousPokemon?.name
-                  ? previousPokemon.name[0].toUpperCase() +
-                    previousPokemon.name.slice(1)
+                {previousPokemon?.Name
+                  ? previousPokemon.Name[0].toUpperCase() +
+                    previousPokemon.Name.slice(1)
                   : "Unknown"}
               </Typography>
             </Box>
@@ -101,9 +101,9 @@ export const DetailPage = () => {
                 fontWeight={700}
                 marginRight={1}
               >
-                {nextPokemon?.name
-                  ? nextPokemon.name[0].toUpperCase() +
-                    nextPokemon.name.slice(1)
+                {nextPokemon?.Name
+                  ? nextPokemon.Name[0].toUpperCase() +
+                    nextPokemon.Name.slice(1)
                   : "Unknown"}
               </Typography>
               <Typography color="white" fontSize={24} fontWeight={700}>
@@ -133,8 +133,8 @@ export const DetailPage = () => {
         >
           <Box bgcolor="white" pt={2}>
             <Typography sx={{ mr: 2 }} variant="h4" display="inline">
-              {pokemon?.name
-                ? pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
+              {pokemon?.Name
+                ? pokemon.Name[0].toUpperCase() + pokemon.Name.slice(1)
                 : "Unknown"}
             </Typography>
             <Typography variant="h4" display="inline" color="gray">
@@ -144,7 +144,6 @@ export const DetailPage = () => {
         </Box>
       </Box>
       <Box
-        container
         maxWidth="md"
         sx={{
           margin: "auto!important",
@@ -355,11 +354,11 @@ const calculateWeaknesses = (types) => {
     fairy: 0,
   };
 
-  types.forEach((type) => {
-    weaknesses[type].weak.forEach((t) => total[t]++);
-    weaknesses[type].resistant.forEach((t) => total[t]--);
-    weaknesses[type].nullified.forEach((t) => total[t]--);
-  });
+  // types.forEach((type) => {
+  //   weaknesses[type].weak.forEach((t) => total[t]++);
+  //   weaknesses[type].resistant.forEach((t) => total[t]--);
+  //   weaknesses[type].nullified.forEach((t) => total[t]--);
+  // });
   let final = [];
   Object.keys(total).forEach((type) => {
     if (total[type] > 0) final.push(type);

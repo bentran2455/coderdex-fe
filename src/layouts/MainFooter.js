@@ -41,7 +41,7 @@ export const MainFooter = () => {
   return (
     <Container maxWidth="100%" sx={styles.container}>
       <Grid
-        container="true"
+        container
         maxWidth="md"
         sx={{ paddingY: "2rem" }}
         spacing={{ xs: 4, md: 4 }}

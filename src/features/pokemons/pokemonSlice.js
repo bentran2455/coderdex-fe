@@ -7,8 +7,8 @@ export const getPokemons = createAsyncThunk(
   async ({ page, search, type }, { rejectWithValue }) => {
     try {
       let url = `/pokemons?page=${page}&limit=${POKEMONS_PER_PAGE}`;
-      if (search) url += `&search=${search}`;
-      if (type) url += `&type=${type}`;
+      if (search) url = `/search?q=${search}`;
+      if (type) url = `/type?q=${type}`;
       const response = await apiService.get(url);
       const timeout = () => {
         return new Promise((resolve) => {
@@ -18,6 +18,9 @@ export const getPokemons = createAsyncThunk(
         });
       };
       await timeout();
+      if (search || type) {
+        return response;
+      }
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -32,7 +35,7 @@ export const getPokemonById = createAsyncThunk(
       let url = `/pokemons/${id}`;
       const response = await apiService.get(url);
       if (!response.data) return rejectWithValue({ message: "No data" });
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }

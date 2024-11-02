@@ -1,11 +1,12 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { Stack, Container, Grid, Typography } from "@mui/material";
+import { Stack, Container, Grid, Typography, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { changePage, searchQuery } from "../features/pokemons/pokemonSlice";
-import { FormProvider, FTextField } from "./form";
+import FTextField from "./form/FTextField";
+import FormProvider from "./form/FormProvider";
 
 const styles = {
   container: {
@@ -40,6 +41,9 @@ const styles = {
     width: "2.5rem",
     padding: 0.1,
     borderRadius: 1,
+    "&:hover": {
+      backgroundColor: "#ee6b2f", // Same color to remove hover effect
+    },
   },
   boxRight: {
     padding: 2,
@@ -54,8 +58,8 @@ const defaultValues = {
 };
 
 export const SearchBox = () => {
-  const methods = useForm(defaultValues);
-  const { handleSubmit } = methods;
+  const methods = useForm({ defaultValues });
+  const { handleSubmit, watch, setValue } = methods;
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
@@ -63,11 +67,14 @@ export const SearchBox = () => {
     dispatch(searchQuery(data.search));
     dispatch(changePage(1));
   };
-
+  const searchValue = watch("search");
+  const handleChange = (event) => {
+    setValue("search", event.target.value);
+  };
   return (
     <Container maxWidth="lg" sx={styles.container}>
       <Grid
-        container="true"
+        container
         maxWidth="md"
         sx={{ paddingY: "2rem" }}
         spacing={{ xs: 2, md: 4 }}
@@ -78,8 +85,15 @@ export const SearchBox = () => {
             <Typography variant="h5">Name or Number</Typography>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <FTextField name="search" sx={styles.inputText} />
-                <SearchOutlined sx={styles.icon} />
+                <FTextField
+                  name="search"
+                  sx={styles.inputText}
+                  onChange={handleChange}
+                  value={searchValue}
+                />
+                <IconButton type="submit" sx={styles.icon}>
+                  <SearchOutlined />
+                </IconButton>
               </Stack>
             </FormProvider>
             <Typography>
