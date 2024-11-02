@@ -8,7 +8,7 @@ const port = process.env.PORT || 3001;
 const hostname = "localhost";
 const appRouter = require("./src/routes/routes");
 
-app.use(cors());
+app.use(cors({ origin: "https://coderdex-express.netlify.app/" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
